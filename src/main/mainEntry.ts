@@ -24,7 +24,7 @@ app.whenReady().then(() => {
 	mainWindow = new BrowserWindow(config);
 
 	// 打开devtools
-	mainWindow.webContents.openDevTools()
+	mainWindow.webContents.openDevTools();
 
 	if (process.argv[2]) {
 		mainWindow.loadURL(process.argv[2]);
