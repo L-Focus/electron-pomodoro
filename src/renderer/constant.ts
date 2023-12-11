@@ -13,7 +13,7 @@ export const TEXT_MAP = {
 };
 
 /** 工作时间 秒 */
-export const WORK_TIME = 30;
+export const WORK_TIME = 3;
 
 /** 休息时间 秒 */
-export const REST_TIME = 10;
+export const REST_TIME = 1;

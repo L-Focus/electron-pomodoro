@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { REST_TIME, STATE_TYPE, TEXT_MAP, WORK_TIME } from "./constant";
 import Timer from "../timer";
-import style from "./App.module.css";
+import { notification } from "./utils";
 
 function App() {
-	const [currentStatus, setCurrentStatus] = useState(STATE_TYPE.START_WORK);
+	const [currentStatus, setCurrentStatus] = useState(STATE_TYPE.STOP_WORK);
 	const [remainTime, setRemainTime] = useState(0);
 
 	const workTimer = new Timer({
@@ -21,6 +21,9 @@ function App() {
 		},
 		onend() {
 			console.log("onend");
+			console.log(currentStatus);
+			console.log(TEXT_MAP[currentStatus]);
+
 			setRemainTime(0);
 
 			console.log(
@@ -33,10 +36,26 @@ function App() {
 			);
 
 			if (currentStatus === STATE_TYPE.STOP_WORK) {
+				notification({
+					title: "恭喜你完成任务",
+					body: "是否开始休息？",
+					actionText: "休息五分钟",
+					closeButtonText: "继续工作",
+					onaction: startRest,
+					onclose: startWork,
+				});
 				setCurrentStatus(STATE_TYPE.START_REST);
 
 				console.log("工作结束");
 			} else if (currentStatus === STATE_TYPE.STOP_REST) {
+				notification({
+					body: "开始新的工作吧!",
+					title: "休息结束",
+					closeButtonText: "继续休息",
+					actionText: "开始工作",
+					onaction: startWork,
+					onclose: startRest,
+				});
 				setCurrentStatus(STATE_TYPE.START_WORK);
 
 				console.log("休息结束");
@@ -75,10 +94,8 @@ function App() {
 
 	return (
 		<>
-			<div className={style.timerContainer}>{remainTime}</div>
-			<button className={style.switchButton} onClick={onBtnClick}>
-				{TEXT_MAP[currentStatus]}
-			</button>
+			<div>{remainTime}</div>
+			<button onClick={onBtnClick}>{TEXT_MAP[currentStatus]}</button>
 		</>
 	);
 }
