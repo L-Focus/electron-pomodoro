@@ -12,7 +12,7 @@ app.whenReady().then(() => {
 	handleIPC()
 
 	const config: BrowserWindowConstructorOptions = {
-		width: 250,
+		width: 350,
 		height: 350,
 		webPreferences: {
 			// 把 Node.js 环境集成到渲染进程中
@@ -28,10 +28,9 @@ app.whenReady().then(() => {
 	};
 	mainWindow = new BrowserWindow(config);
 
-	// 打开devtools
-	mainWindow.webContents.openDevTools();
-
 	if (process.argv[2]) {
+		// 仅在生产环境打开devtools
+		mainWindow.webContents.openDevTools();
 		mainWindow.loadURL(process.argv[2]);
 	} else {
 		registerScheme();

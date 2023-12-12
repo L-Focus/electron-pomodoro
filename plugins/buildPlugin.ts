@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import esbuild from "esbuild";
 import { build } from "electron-builder";
-import type { CliOptions } from "electron-builder";
+import options from "../electron-builder-config";
 
 class BuildObj {
 	buildMain() {
@@ -41,30 +41,6 @@ class BuildObj {
 
 	buildInstaller() {
 		console.log("buildInstaller --->");
-
-		const options: CliOptions = {
-			config: {
-				appId: "com.pomodoro.desktop",
-				productName: "Pomodoro",
-				directories: {
-					output: join(cwd(), "release"),
-					app: join(cwd(), "dist"),
-				},
-				nsis: {
-					oneClick: true,
-					perMachine: true,
-					allowToChangeInstallationDirectory: false,
-					createDesktopShortcut: true,
-					createStartMenuShortcut: true,
-					shortcutName: "PomodoroDesktop",
-				},
-				files: ["**"],
-				extends: null,
-				asar: true,
-				publish: [{ provider: "generic", url: "http://localhost:5500/" }],
-			},
-			projectDir: cwd(),
-		};
 
 		return build(options);
 	}
