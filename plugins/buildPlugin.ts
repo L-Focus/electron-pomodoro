@@ -8,11 +8,22 @@ import options from "../electron-builder-config";
 class BuildObj {
 	buildMain() {
 		esbuild.buildSync({
+			// 这个路径是相对于 vite.config.ts
 			entryPoints: ["./src/main/mainEntry.ts"],
 			bundle: true,
 			platform: "node",
 			minify: true,
 			outfile: "./dist/mainEntry.js",
+			external: ["electron"],
+		});
+
+		esbuild.buildSync({
+			// 这个路径是相对于 vite.config.ts
+			entryPoints: ["./src/preload/index.js"],
+			bundle: true,
+			platform: "node",
+			minify: true,
+			outfile: "./dist/preload.js",
 			external: ["electron"],
 		});
 	}
@@ -40,7 +51,6 @@ class BuildObj {
 	}
 
 	buildInstaller() {
-		console.log("buildInstaller --->");
 
 		return build(options);
 	}

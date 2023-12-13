@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from "electron";
 import registerScheme from "./CustomScheme";
-import type { BrowserWindowConstructorOptions } from "electron";
 import handleIPC from "./handleIPC";
+import { getPreloadPath } from "./utils";
+import type { BrowserWindowConstructorOptions } from "electron";
 
 // 用于设置渲染进程开发者调试工具的警告，这里设置为 true 就不会再显示任何警告了。
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
@@ -9,7 +10,7 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let mainWindow: BrowserWindow;
 
 app.whenReady().then(() => {
-	handleIPC()
+	handleIPC();
 
 	const config: BrowserWindowConstructorOptions = {
 		width: 350,
@@ -20,10 +21,11 @@ app.whenReady().then(() => {
 			webSecurity: false,
 			allowRunningInsecureContent: true,
 			// 在同一个 JavaScript 上下文中使用 Electron API
-			contextIsolation: false,
+			contextIsolation: true,
 			webviewTag: true,
 			spellcheck: false,
 			disableHtmlFullscreenWindowResize: true,
+			preload: getPreloadPath(),
 		},
 	};
 	mainWindow = new BrowserWindow(config);

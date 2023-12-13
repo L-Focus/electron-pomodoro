@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { REST_TIME, STATE_TYPE, TEXT_MAP, WORK_TIME } from "./constant";
 import Timer from "../timer";
-import { notification } from "./utils";
 
 function App() {
 	const [currentStatus, setCurrentStatus] = useState(STATE_TYPE.STOP_WORK);
@@ -10,8 +9,6 @@ function App() {
 	const workTimer = new Timer({
 		ontick(sec: number) {
 			const num = Number((sec / 1000).toFixed(0));
-
-			console.log("num", num);
 
 			setRemainTime(num);
 		},
@@ -36,29 +33,35 @@ function App() {
 			);
 
 			if (currentStatus === STATE_TYPE.STOP_WORK) {
-				notification({
-					title: "恭喜你完成任务",
-					body: "是否开始休息？",
-					actionText: "休息五分钟",
-					closeButtonText: "继续工作",
-					onaction: startRest,
-					onclose: startWork,
-				});
+				if (window.electronAPI.platform() === "darwin") {
+					window.electronAPI.notificationFunc({
+						title: "恭喜你完成任务",
+						body: "是否开始休息？",
+						actionText: "休息五分钟",
+						closeButtonText: "继续工作",
+						onaction: startRest,
+						onclose: startWork,
+					});
+				} else {
+					console.log("工作结束");
+				}
+
 				setCurrentStatus(STATE_TYPE.START_REST);
-
-				console.log("工作结束");
 			} else if (currentStatus === STATE_TYPE.STOP_REST) {
-				notification({
-					body: "开始新的工作吧!",
-					title: "休息结束",
-					closeButtonText: "继续休息",
-					actionText: "开始工作",
-					onaction: startWork,
-					onclose: startRest,
-				});
-				setCurrentStatus(STATE_TYPE.START_WORK);
+				if (window.electronAPI.platform() === "darwin") {
+					window.electronAPI.notificationFunc({
+						body: "开始新的工作吧!",
+						title: "休息结束",
+						closeButtonText: "继续休息",
+						actionText: "开始工作",
+						onaction: startWork,
+						onclose: startRest,
+					});
+				} else {
+					console.log("休息结束");
+				}
 
-				console.log("休息结束");
+				setCurrentStatus(STATE_TYPE.START_WORK);
 			}
 		},
 	});
