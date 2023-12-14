@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from "electron";
-import registerScheme from "./CustomScheme";
+import registerScheme from "./customScheme";
 import handleIPC from "./handleIPC";
 import { getPreloadPath } from "./utils";
+import updaterCheck from "./updater";
 import type { BrowserWindowConstructorOptions } from "electron";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
@@ -10,6 +11,7 @@ let mainWindow: BrowserWindow;
 
 app.whenReady().then(() => {
 	handleIPC();
+	updaterCheck();
 
 	const config: BrowserWindowConstructorOptions = {
 		width: 350,

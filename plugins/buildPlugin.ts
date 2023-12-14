@@ -37,6 +37,7 @@ class BuildObj {
 
 		localPkgJson.main = "mainEntry.js";
 		delete localPkgJson.script;
+		delete localPkgJson.dependencies;
 		delete localPkgJson.devDependencies;
 		Object.assign(localPkgJson, {
 			devDependencies: { electron: electronConfig },
