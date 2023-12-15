@@ -1,6 +1,8 @@
 import { join } from "node:path";
 import { cwd } from "node:process";
+import { readFileSync } from "node:fs";
 import express from "express";
+import YAML from "yaml";
 import type { NextFunction, Request, Response } from "express";
 
 const app = express();
@@ -17,7 +19,9 @@ app.use(express.static(join(cwd(), "release")));
 
 // 提供下载应用程序最新版本的路由
 app.get("/download/latest", (req, res) => {
-	const filePath = join(cwd(), "release", "Pomodoro-0.0.0.dmg");
+	const file = readFileSync(join(cwd(), "release", "latest-mac.yml"), "utf8");
+	const yaml = YAML.parse(file);
+	const filePath = join(cwd(), "release", yaml.path);
 	res.download(filePath);
 });
 

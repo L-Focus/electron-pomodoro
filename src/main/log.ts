@@ -15,7 +15,7 @@ class ElectronLog {
 		if (process.argv[2]) {
 			return join(cwd(), "log/log.txt");
 		} else {
-			return join(app.getPath("userData"), "log.txt");
+			return join(app.getPath("userData"), "log/log.txt");
 		}
 	};
 
