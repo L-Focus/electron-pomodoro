@@ -42,5 +42,5 @@ app.whenReady().then(() => {
 
 app.addListener("before-quit", () => {
 	electronLog.writeLog("[before-quit]");
-	electronLog.closeHandler();
+	electronLog.closeHandle();
 });

@@ -26,8 +26,8 @@ class ElectronLog {
 		this.logStream.write(message);
 	};
 
-	public closeHandler = () => {
-		this.writeLog("ElectronLog closeHandler");
+	public closeHandle = () => {
+		this.writeLog("ElectronLog closeHandle");
 		this.logStream.close();
 	};
 }
