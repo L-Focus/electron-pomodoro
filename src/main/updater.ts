@@ -4,6 +4,7 @@ import electronLog from "./log";
 
 export default async function updaterCheck() {
 	try {
+		autoUpdater.setFeedURL('http://localhost:5500/download/latest');
 		const res = await autoUpdater.checkForUpdates();
 
 		if (!res) return;
