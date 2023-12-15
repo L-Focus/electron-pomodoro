@@ -2,20 +2,35 @@ import { createWriteStream } from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { app } from "electron";
+import type { WriteStream } from "node:original-fs";
 
-const getLogPath = () => {
-	if (process.argv[2]) {
-		return join(cwd(), "log/log.txt");
-	} else {
-		return join(app.getPath("userData"), "log.txt");
+class ElectronLog {
+	private logStream: WriteStream;
+
+	constructor() {
+		this.logStream = createWriteStream(this.getLogPath(), { flags: "a" });
 	}
-};
 
-const logStream = createWriteStream(getLogPath(), { flags: "a" });
+	private getLogPath = () => {
+		if (process.argv[2]) {
+			return join(cwd(), "log/log.txt");
+		} else {
+			return join(app.getPath("userData"), "log.txt");
+		}
+	};
 
-export function writeLog(text: string) {
-	const now = new Date();
-	const timestamp = now.toLocaleString();
-	const message = `[${timestamp}] ${text}\n`;
-	logStream.write(message);
+	public writeLog = (text: string) => {
+		const now = new Date();
+		const timestamp = now.toLocaleString();
+		const message = `[${timestamp}] ${text}\n`;
+		this.logStream.write(message);
+	};
+
+	public closeHandler = () => {
+		this.logStream.close();
+	};
 }
+
+const electronLog = new ElectronLog();
+
+export default electronLog;

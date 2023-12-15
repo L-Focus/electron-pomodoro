@@ -1,6 +1,6 @@
 import { dialog } from "electron";
 import { autoUpdater } from "electron-updater";
-import { writeLog } from "./log";
+import electronLog from "./log";
 
 export default async function updaterCheck() {
 	try {
@@ -8,7 +8,7 @@ export default async function updaterCheck() {
 
 		if (!res) return;
 
-		writeLog("[checkForUpdates res] " + JSON.stringify(res));
+		electronLog.writeLog("[checkForUpdates res] " + JSON.stringify(res));
 
 		autoUpdater.addListener("update-downloaded", async () => {
 			await dialog.showMessageBox({

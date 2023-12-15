@@ -3,8 +3,8 @@ import registerScheme from "./customScheme";
 import handleIPC from "./handleIPC";
 import { getPreloadPath } from "./utils";
 import updaterCheck from "./updater";
+import electronLog from "./log";
 import type { BrowserWindowConstructorOptions } from "electron";
-import { writeLog } from "./log";
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 
@@ -41,5 +41,6 @@ app.whenReady().then(() => {
 });
 
 app.addListener("before-quit", () => {
-	writeLog("[before-quit]");
+	electronLog.writeLog("[before-quit]");
+	electronLog.closeHandler();
 });
