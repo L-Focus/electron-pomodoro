@@ -11,8 +11,6 @@ const TimerArea = () => {
 			ontick(sec: number) {
 				const num = Number((sec / 1000).toFixed(0));
 
-				console.log("ontick num", num);
-
 				setRemainTime(num);
 			},
 			onstop() {
@@ -63,9 +61,9 @@ const TimerArea = () => {
 	const percent = useMemo(() => {
 		let allTime = 0;
 
-		if (STATE_TYPE.STOP_WORK === currentStatus) {
+		if ([STATE_TYPE.STOP_WORK, STATE_TYPE.START_WORK].includes(currentStatus)) {
 			allTime = WORK_TIME;
-		} else if (STATE_TYPE.START_REST === currentStatus) {
+		} else if ([STATE_TYPE.STOP_REST, STATE_TYPE.START_REST].includes(currentStatus)) {
 			allTime = REST_TIME;
 		}
 

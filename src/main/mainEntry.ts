@@ -10,6 +10,7 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 let mainWindow: BrowserWindow;
 
 app.whenReady().then(() => {
+	console.log("app.whenReady")
 	handleIPC();
 	updaterCheck();
 

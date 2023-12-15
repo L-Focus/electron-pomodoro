@@ -11,6 +11,7 @@ export default async function updaterCheck() {
 
 		autoUpdater.addListener("update-downloaded", async () => {
 			await dialog.showMessageBox({
+				type: "info",
 				message: "有可用的升级",
 			});
 
