@@ -15,7 +15,7 @@ class ElectronLog {
 		if (process.argv[2]) {
 			return join(cwd(), "log/log.txt");
 		} else {
-			return join(app.getPath("userData"), "log/log.txt");
+			return join(app.getPath("userData"), "log.txt");
 		}
 	};
 
@@ -28,7 +28,7 @@ class ElectronLog {
 
 	public closeHandle = () => {
 		this.writeLog("ElectronLog closeHandle");
-		this.logStream.close();
+		this.logStream.end();
 	};
 }
 

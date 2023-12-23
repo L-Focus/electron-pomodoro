@@ -2,3 +2,5 @@
 [2023/12/15 18:30:54] [before-quit]
 [2023/12/15 18:32:28] [before-quit]
 [2023/12/15 18:32:28] ElectronLog closeHandler
+[2023/12/22 17:04:32] [before-quit]
+[2023/12/22 17:04:32] ElectronLog closeHandle

@@ -9,7 +9,7 @@ function App() {
 
 	return (
 		<>
-			<div>0.0.4</div>
+			<div>0.0.6</div>
 			{isStart ? (
 				<TimerArea />
 			) : (

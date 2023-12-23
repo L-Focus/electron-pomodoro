@@ -11,6 +11,10 @@ const logMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	next();
 };
 
+const file = readFileSync(join(cwd(), "release", "latest-mac.yml"), "utf8");
+const yaml = YAML.parse(file);
+const { path } = yaml;
+
 // 添加日志中间件
 app.use(logMiddleware);
 
@@ -19,10 +23,10 @@ app.use(express.static(join(cwd(), "release")));
 
 // 提供下载应用程序最新版本的路由
 app.get("/download/latest", (req, res) => {
-	const file = readFileSync(join(cwd(), "release", "latest-mac.yml"), "utf8");
-	const yaml = YAML.parse(file);
-	const filePath = join(cwd(), "release", yaml.path);
-	res.download(filePath);
+	const filePath = join(cwd(), "release", path);
+	res.download(filePath, (err) => {
+		console.log(err);
+	});
 });
 
 // 启动服务
